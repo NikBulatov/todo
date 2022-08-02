@@ -10,7 +10,7 @@ def randomword(length):
 
 
 class Command(BaseCommand):
-    help = "Create 10 employees"
+    help = "Create any quantity of employees. Default 10 employees are created."
 
     def add_arguments(self, parser):
         parser.add_argument(
