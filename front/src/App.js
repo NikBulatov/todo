@@ -1,8 +1,9 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from "axios";
 import UserList from "./components/User";
+import Footer from "./components/Footer";
+import Menu from "./components/Menu";
 
 class App extends React.Component {
     constructor(props) {
@@ -23,15 +24,11 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <header className="App-header">
-                    <h1>Welcome to ToDo App!</h1>
-                </header>
+                <Menu/>
                 <div className="container">
                     <UserList users={this.state.users}/>
                 </div>
-                <footer className="App-footer">
-                    <h1>Hello from Footer!</h1>
-                </footer>
+                <Footer/>
             </div>
         )
     }
