@@ -17,28 +17,14 @@ class App extends React.Component {
             this.setState({
                 'users': response.data
             })
-        }).catch(error => console.log(error))
+        }).catch(error => console.log(error));
     }
 
     render() {
-
         return (
             <div className="App">
                 <header className="App-header">
-                    <img src={
-                        logo
-                    }
-
-                         className="App-logo" alt="logo"/>
-                    <p>
-                        Редактируйте <code>src/App.js</code> и сохраните для перезагрузки.
-                    </p>
-                    <a className="App-link"
-                       href="https://ru.reactjs.org"
-                       target="_blank"
-                       rel="noopener noreferrer">
-                        Learn React
-                    </a>
+                    <h1>Welcome to ToDo App!</h1>
                 </header>
                 <div className="container">
                     <UserList users={this.state.users}/>
