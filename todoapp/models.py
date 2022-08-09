@@ -31,7 +31,7 @@ class Project(models.Model):
         verbose_name_plural = 'Projects'
 
     name = models.CharField(max_length=128)
-    url = models.URLField()
+    url = models.URLField(blank=True)
     users = models.ManyToManyField(CustomUserModel)
 
     def __str__(self):
@@ -51,7 +51,7 @@ class ToDo(models.Model):
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    user = models.OneToOneField(CustomUserModel, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUserModel, on_delete=models.CASCADE)
     status = models.CharField(max_length=1, choices=StatusChoices.choices)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
