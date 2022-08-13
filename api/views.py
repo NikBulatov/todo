@@ -5,7 +5,7 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from todoapp import serializers
 from todoapp.models import CustomUserModel as User, Project, ToDo
 from .paginators import ProjectPagePagination, ToDoPagePagination
-
+from .filters import ProjectFilter
 
 class UserViewSet(mixins.ListModelMixin,
                   mixins.RetrieveModelMixin,
@@ -27,7 +27,7 @@ class ToDoViewSet(ModelViewSet):
     serializer_class = serializers.ToDoBaseSerializer
     queryset = ToDo.objects.all()
     pagination_class = ToDoPagePagination
-    filterset_fields = ['project', ]
+    filterset_class = ProjectFilter
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
