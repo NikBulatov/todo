@@ -30,7 +30,7 @@ class Command(BaseCommand):
                     email=f"{name}@inc.com",
                     password="Test!123",
                 )
-            print(f"{options['quantity']} employees were created")
-
         except CommandError:
             print("Error occurred while creating employees")
+        else:
+            print(f"{options['quantity']} employees were created")
