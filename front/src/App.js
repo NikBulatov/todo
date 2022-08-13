@@ -28,17 +28,17 @@ class App extends React.Component {
     loadData() {
         axios.get(get_url('users/'))
             .then(response => {
-                this.setState({users: response.data})
+                this.setState({users: response.data.results})
             }).catch(error => console.log(error));
 
         axios.get(get_url('projects/'))
             .then(response => {
-                this.setState({projects: response.data})
+                this.setState({projects: response.data.results})
             }).catch(error => console.log(error));
 
         axios.get(get_url('todos/'))
             .then(response => {
-                this.setState({todos: response.data})
+                this.setState({todos: response.data.results})
             }).catch(error => console.log(error));
     }
 
