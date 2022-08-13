@@ -27,6 +27,7 @@ class ToDoViewSet(ModelViewSet):
     serializer_class = serializers.ToDoBaseSerializer
     queryset = ToDo.objects.all()
     pagination_class = ToDoPagePagination
+    filterset_fields = ['project', ]
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
