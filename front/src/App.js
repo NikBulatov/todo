@@ -23,7 +23,7 @@ class App extends React.Component {
             menuItems: [
                 {name: 'Users', link: '/users', id: 1},
                 {name: 'Projects', link: '/projects', id: 2},
-                {name: 'TODOs', link: '/todos', id: 3},
+                {name: 'ToDos', link: '/todos', id: 3},
             ],
         }
     }

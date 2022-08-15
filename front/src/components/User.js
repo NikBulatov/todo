@@ -15,6 +15,8 @@ const UserItem = ({user}) => {
 };
 
 const UserList = ({users}) => {
+    document.title = "Users";
+
     return (
         <table className="table">
             <thead>

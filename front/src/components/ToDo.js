@@ -14,6 +14,8 @@ const ToDoItem = ({todo}) => {
 };
 
 const ToDoList = ({todos}) => {
+    document.title = "ToDos";
+
     return (
         <table className="table">
             <thead>

@@ -11,6 +11,8 @@ const ProjectItem = ({project}) => {
 };
 
 const ProjectList = ({projects}) => {
+    document.title = "Projects";
+
     return (
         <table className="table">
             <thead>
