@@ -1,13 +1,16 @@
 import React from 'react';
 import axios from "axios";
-import './bootstrap/css/bootstrap.min.css'
+import {BrowserRouter, Route, Navigate, Routes} from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './bootstrap/css/sticky-footer-navbar.css'
 import UserList from "./components/User";
 import Footer from "./components/Footer";
 import Menu from "./components/Menu";
+import NotFound404 from "./components/NotFound";
+import ProjectList from "./components/Project";
+import ToDoList from "./components/ToDo";
 
-
-const DOMAIN = 'http://127.0.0.1:8000/api/'
+const DOMAIN = 'http://127.0.0.1:8000/api'
 const get_url = (url) => `${DOMAIN}${url}`
 
 class App extends React.Component {
@@ -26,17 +29,17 @@ class App extends React.Component {
     }
 
     loadData() {
-        axios.get(get_url('users/'))
+        axios.get(get_url(this.state.menuItems[0].link))
             .then(response => {
                 this.setState({users: response.data.results})
             }).catch(error => console.log(error));
 
-        axios.get(get_url('projects/'))
+        axios.get(get_url(this.state.menuItems[1].link))
             .then(response => {
                 this.setState({projects: response.data.results})
             }).catch(error => console.log(error));
 
-        axios.get(get_url('todos/'))
+        axios.get(get_url(this.state.menuItems[2].link))
             .then(response => {
                 this.setState({todos: response.data.results})
             }).catch(error => console.log(error));
@@ -49,12 +52,23 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <header>
-                    <Menu menuItems={this.state.menuItems}/>
-                </header>
-                <div className="container">
-                    <UserList users={this.state.users}/>
-                </div>
+                <BrowserRouter>
+                    <header>
+                        <Menu menuItems={this.state.menuItems}/>
+                    </header>
+                    <div className="container">
+                        <Routes>
+                            <Route exact path="/" element={<Navigate replace to={this.state.menuItems[0].link}/>}/>
+                            <Route exact path={this.state.menuItems[0].link}
+                                   element={<UserList users={this.state.users}/>}/>
+                            <Route exact path={this.state.menuItems[1].link}
+                                   element={<ProjectList projects={this.state.projects}/>}/>
+                            <Route exact path={this.state.menuItems[2].link}
+                                   element={<ToDoList todos={this.state.todos}/>}/>
+                            <Route exact path="*" element={<NotFound404 location={window.location}/>}/>
+                        </Routes>
+                    </div>
+                </BrowserRouter>
                 <Footer/>
             </div>
         )
