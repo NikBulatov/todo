@@ -1,12 +1,13 @@
 import random
 import string
+from mixer.backend.django import mixer
 from django.core.management.base import BaseCommand, CommandError
 from todoapp.models import CustomUserModel as User
 
 
 def randomword(length):
     letters = string.ascii_lowercase
-    return ''.join(random.choice(letters) for i in range(length))
+    return ''.join(random.choice(letters) for _ in range(length))
 
 
 class Command(BaseCommand):
@@ -25,11 +26,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         try:
             for number in range(int(options['quantity'])):
-                name = f'employee_{randomword(8)}'
-                User.objects.create_user(
-                    email=f"{name}@inc.com",
-                    password="Test!123",
-                )
+                mixer.blend(User)
         except CommandError:
             print("Error occurred while creating employees")
         else:
