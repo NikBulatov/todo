@@ -1,10 +1,12 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 const ToDoItem = ({todo}) => {
     return (
         <tbody>
         <tr>
-            <td>{todo.project}</td>
+             <td>{todo.project.name}</td>
+            {/*<td><Link to={`/${todo.project.id}`}>{todo.project.name}</Link></td>*/}
             <td>{todo.user}</td>
             <td>{todo.status}</td>
             <td>{todo.text}</td>
