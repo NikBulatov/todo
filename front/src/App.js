@@ -9,6 +9,7 @@ import Menu from "./components/Menu";
 import NotFound404 from "./components/NotFound";
 import ProjectList from "./components/Project";
 import ToDoList from "./components/ToDo";
+import ProjectItems from "./components/ProjectItem"
 
 const DOMAIN = 'http://127.0.0.1:8000/api'
 const get_url = (url) => `${DOMAIN}${url}`
@@ -63,6 +64,7 @@ class App extends React.Component {
                                    element={<UserList users={this.state.users}/>}/>
                             <Route exact path={this.state.menuItems[1].link}
                                    element={<ProjectList projects={this.state.projects}/>}/>
+                            <Route path="/:id" element={<ProjectItems items={this.state.projects}/>}/>
                             <Route exact path={this.state.menuItems[2].link}
                                    element={<ToDoList todos={this.state.todos}/>}/>
                             <Route exact path="*" element={<NotFound404 location={window.location}/>}/>
