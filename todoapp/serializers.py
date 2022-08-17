@@ -9,13 +9,15 @@ class UserBaseSerializer(serializers.ModelSerializer):
 
 
 class ProjectBaseSerializer(serializers.ModelSerializer):
+    users = UserBaseSerializer(many=True)
+
     class Meta:
         model = Project
         fields = '__all__'
 
 
 class ToDoBaseSerializer(serializers.ModelSerializer):
-    project = serializers.StringRelatedField()
+    project = ProjectBaseSerializer()
     user = serializers.StringRelatedField()
 
     class Meta:
