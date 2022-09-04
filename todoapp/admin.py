@@ -15,7 +15,7 @@ class CustomUserAdmin(UserAdmin):
 
     # fields to be used in editing users
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('email', 'password', 'first_name', 'last_name')}),
         ('Permissions', {
             'fields': (
                 'is_staff',
