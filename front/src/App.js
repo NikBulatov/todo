@@ -17,7 +17,7 @@ import LoginForm from "./components/Auth";
 
 
 const DOMAIN = 'http://127.0.0.1:8000/api'
-const get_url = (url) => `${DOMAIN}${url}`
+const getUrl = (url) => `${DOMAIN}${url}`
 
 class App extends React.Component {
     constructor(props) {
@@ -45,13 +45,14 @@ class App extends React.Component {
     }
 
     logout() {
-        this.setToken('')
+        this.setToken('');
+        window.location.reload();
     }
 
     getHeaders() {
         return {
-            // 'Content-Type': 'application/json',
-            'Authorization': this.isAuthenticated() ? `Token ${this.state.token}` : ''
+            'Content-Type': 'application/json',
+            'Authorization': this.isAuthenticated() ? `Bearer ${this.state.token}` : ''
         }
     }
 
@@ -68,30 +69,30 @@ class App extends React.Component {
     }
 
 
-    getToken(username, password) {
-        axios.post('http://127.0.0.1:8000/api-token-auth/', {
-            username: username,
+    getToken(email, password) {
+        axios.post(getUrl('/token/'), {
+            email: email,
             password: password
         },)
             .then(response => {
-                console.log(response.data)
+                this.setToken(response.data['access'])
             }).catch(error => alert('Неверный логин или пароль'))
     }
 
     loadData() {
         const headers = this.getHeaders();
 
-        axios.get(get_url(this.state.menuItems[0].link), {headers})
+        axios.get(getUrl(this.state.menuItems[0].link), {headers})
             .then(response => {
                 this.setState({users: response.data.results})
             }).catch(error => console.log(error));
 
-        axios.get(get_url(this.state.menuItems[1].link), {headers})
+        axios.get(getUrl(this.state.menuItems[1].link), {headers})
             .then(response => {
                 this.setState({projects: response.data.results})
             }).catch(error => console.log(error));
 
-        axios.get(get_url(this.state.menuItems[2].link), {headers})
+        axios.get(getUrl(this.state.menuItems[2].link), {headers})
             .then(response => {
                 this.setState({todos: response.data.results})
             }).catch(error => console.log(error));
@@ -121,7 +122,7 @@ class App extends React.Component {
                                    element={<ToDoList todos={this.state.todos}/>}/>
                             <Route exact path="*" element={<NotFound404 location={window.location}/>}/>
                             <Route exact path='/login' element={<LoginForm
-                                getToken={(username, password) => this.getToken(username, password)}/>}/>
+                                getToken={(email, password) => this.getToken(email, password)}/>}/>
                         </Routes>
                     </div>
                 </BrowserRouter>
