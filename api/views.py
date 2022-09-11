@@ -16,6 +16,11 @@ class UserViewSet(mixins.ListModelMixin,
     serializer_class = serializers.UserBaseSerializer
     queryset = User.objects.all()
 
+    def get_serializer_class(self):
+        if self.request.version == '0.1':
+            return serializers.UserSerializerVersion01
+        return self.serializer_class
+
 
 class ProjectViewSet(ModelViewSet):
     serializer_class = serializers.ProjectBaseSerializer

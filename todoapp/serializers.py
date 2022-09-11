@@ -9,6 +9,13 @@ class UserBaseSerializer(serializers.ModelSerializer):
         fields = ('first_name', 'last_name', 'email')
 
 
+class UserSerializerVersion01(UserBaseSerializer):
+    class Meta:
+        model = User
+        fields = (
+            'first_name', 'last_name', 'email', 'is_superuser', 'is_staff')
+
+
 class ProjectBaseSerializer(WritableNestedModelSerializer):
     users = UserBaseSerializer(many=True)
 
