@@ -17,6 +17,6 @@ urlpatterns = [
             UserViewSet.as_view({'get': 'list'})),
     re_path(r'^(?P<version>\d\.\d)/users/(?P<pk>\d+)/$',
             UserViewSet.as_view({'get': 'retrieve',
-                                 'post': 'update'}))
+                                 'patch': 'update'}))
 
 ]
