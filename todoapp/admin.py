@@ -13,7 +13,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = ('email', 'is_staff', 'is_active',)
     list_filter = ('email', 'is_staff', 'is_active',)
 
-    # fields to be used in editing users
+    # fields to be used when editing users
     fieldsets = (
         (None, {'fields': ('email', 'password', 'first_name', 'last_name')}),
         ('Permissions', {
