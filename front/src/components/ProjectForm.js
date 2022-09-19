@@ -11,6 +11,7 @@ class ProjectForm extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSelectChange = this.handleSelectChange.bind(this);
     }
 
     handleChange(event) {
@@ -21,6 +22,22 @@ class ProjectForm extends React.Component {
             [name]: value
         });
     }
+
+    handleSelectChange(event) {
+        const target = event.target;
+        const name = target.name;
+        const options = target.options;
+        const value = [];
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].selected) {
+                value.push(options[i].value);
+            }
+        }
+        this.setState({
+            [name]: value,
+        });
+    }
+
 
     handleSubmit(event) {
         console.log(this.state.name);
@@ -45,10 +62,11 @@ class ProjectForm extends React.Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="users">Users
-                        <select name="users" multiple={true} onChange={this.handleChange}>
+                        <br/>
+                        <select name="users" multiple={true} onChange={this.handleSelectChange}>
                             {this.props.getUsers().map(user =>
-                                <option
-                                    key={user.id} value={user}>{user.firstName} {user.lastName}
+                                <option key={user.id} value={user}>
+                                    {user.firstName} {user.lastName}
                                 </option>)}
                         </select>
                     </label>
