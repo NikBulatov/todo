@@ -65,7 +65,7 @@ class ProjectForm extends React.Component {
                         <br/>
                         <select name="users" multiple={true} onChange={this.handleSelectChange}>
                             {this.props.getUsers().map(user =>
-                                <option key={user.id} value={user.id}>
+                                <option key={user.id} value={user}>
                                     {user.firstName} {user.lastName}
                                 </option>)}
                         </select>
