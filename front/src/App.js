@@ -14,6 +14,7 @@ import ProjectList from "./components/Project";
 import ToDoList from "./components/ToDo";
 import ProjectItems from "./components/ProjectItem"
 import LoginForm from "./components/Auth";
+import ProjectForm from "./components/ProjectForm";
 
 
 const DOMAIN = 'http://127.0.0.1:8000/api'
@@ -34,6 +35,29 @@ class App extends React.Component {
             ],
             token: '',
         }
+    }
+
+    deleteProject(id) {
+        const headers = this.getHeaders();
+        axios.delete(`${getUrl(this.state.menuItems[1].link)}/${id}`, {headers})
+            .then(response => {
+                this.setState({projects: this.state.projects.filter(item => item.id !== id)})
+            }).catch(error => console.log(error))
+    }
+
+    createProject(name, url, users) {
+        const headers = this.getHeaders();
+        const data = {name: name, url: url, users: users};
+        axios.post(this.getUrl(this.state.menuItems[1].link), data, {headers})
+            .then(response => {
+                let newProject = response.data;
+                newProject.users = this.state.users.filter(user => user.id in newProject.users);
+                this.setState({projects: [...this.state.projects, newProject]})
+            }).catch(error => console.log(error))
+    }
+
+    getUsers() {
+        return this.state.users
     }
 
     getCookies() {
@@ -113,16 +137,26 @@ class App extends React.Component {
                     <div className="container">
                         <Routes>
                             <Route exact path="/" element={<Navigate replace to={this.state.menuItems[0].link}/>}/>
+
                             <Route exact path={this.state.menuItems[0].link}
                                    element={<UserList users={this.state.users}/>}/>
+
                             <Route exact path={this.state.menuItems[1].link}
                                    element={<ProjectList projects={this.state.projects}/>}/>
-                            <Route path="/:id" element={<ProjectItems items={this.state.projects}/>}/>
+                            <Route path="/:id" element={<ProjectItems items={this.state.projects}
+                                                                      deleteProject={id => this.deleteProject(id)}/>}/>
+                            <Route exact path={`${this.state.menuItems[1].link}/create`}
+                                   element={<ProjectForm getUsers={() => this.getUsers()}
+                                                         createProject={(name, url, users) =>
+                                                             this.createProject(name, url, users)}/>}/>
+
                             <Route exact path={this.state.menuItems[2].link}
                                    element={<ToDoList todos={this.state.todos}/>}/>
-                            <Route exact path="*" element={<NotFound404 location={window.location}/>}/>
+
                             <Route exact path='/login' element={<LoginForm
                                 getToken={(email, password) => this.getToken(email, password)}/>}/>
+
+                            <Route exact path="*" element={<NotFound404 location={window.location}/>}/>
                         </Routes>
                     </div>
                 </BrowserRouter>

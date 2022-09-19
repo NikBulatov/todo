@@ -16,14 +16,18 @@ const ProjectList = ({projects}) => {
     document.title = "Projects";
 
     return (
-        <table className="table">
-            <thead>
-            <tr>
-                <th>Project Name</th>
-            </tr>
-            </thead>
-            {projects.map(project => <ProjectItem project={project} key={project.id}/>)}
-        </table>
+        <div>
+            <table className="table">
+                <thead>
+                <tr>
+                    <th>Project Name</th>
+                </tr>
+                </thead>
+                {projects.map(project => <ProjectItem project={project} key={project.id}/>)}
+            </table>
+            <Link to='/projects/create'>Create</Link>
+        </div>
+
     )
 };
 
