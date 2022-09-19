@@ -47,13 +47,14 @@ class App extends React.Component {
 
     createProject(name, url, users) {
         const headers = this.getHeaders();
-        const data = {name: name, url: url, users: []};
+        let data = {name: name, url: url, users: []};
         axios.post(`${getUrl(this.state.menuItems[1].link)}/`, data, {headers})
             .then(response => {
-                let newProject = response.data;
-                newProject.users = this.state.users.filter(user => user in [...users]);
-                this.setState({projects: [...this.state.projects, newProject]})
-            }).catch(error => console.log(error))
+                    let newProject = response.data;
+                    newProject.users = this.state.users.filter(user => user.id in users);
+                    this.setState({projects: [...this.state.projects, newProject]})
+                }
+            ).catch(error => console.log(error))
     }
 
     getUsers() {
