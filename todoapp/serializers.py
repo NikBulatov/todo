@@ -16,8 +16,7 @@ class UserSerializerVersion01(UserBaseSerializer):
             'first_name', 'last_name', 'email', 'is_superuser', 'is_staff')
 
 
-class ProjectBaseSerializer(WritableNestedModelSerializer):
-
+class ProjectBaseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = '__all__'
