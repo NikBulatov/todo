@@ -17,7 +17,6 @@ class UserSerializerVersion01(UserBaseSerializer):
 
 
 class ProjectBaseSerializer(WritableNestedModelSerializer):
-    users = UserBaseSerializer(many=True)
 
     class Meta:
         model = Project
@@ -25,7 +24,6 @@ class ProjectBaseSerializer(WritableNestedModelSerializer):
 
 
 class ToDoBaseSerializer(WritableNestedModelSerializer):
-    project = ProjectBaseSerializer()
     user = serializers.StringRelatedField()
 
     class Meta:
