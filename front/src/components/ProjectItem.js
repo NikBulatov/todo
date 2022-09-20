@@ -11,7 +11,7 @@ const ProjectItem = ({project, deleteProject}) => {
             <td>{project.id}</td>
             <td>{project.name}</td>
             <td>{project.url}</td>
-            <td>{project.users.map(user => ` | ${user.lastName} ${user.firstName}`)}</td>
+            <td>{project.users.map(user => ` | ${user}`)}</td>
             <td>
                 <button onClick={() => deleteProject(project.id)} type='button'>Delete</button>
             </td>
