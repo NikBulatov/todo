@@ -5,7 +5,6 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.exceptions import NotFound
 from todoapp import serializers
 from todoapp.models import CustomUserModel as User, Project, ToDo
-from .paginators import ProjectPagePagination, ToDoPagePagination
 from .filters import TodoFilter
 
 
@@ -25,7 +24,6 @@ class UserViewSet(mixins.ListModelMixin,
 class ProjectViewSet(ModelViewSet):
     serializer_class = serializers.ProjectBaseSerializer
     queryset = Project.objects.all()
-    pagination_class = ProjectPagePagination
     filter_backends = [filters.SearchFilter]
     search_fields = ['name']
 
@@ -33,7 +31,6 @@ class ProjectViewSet(ModelViewSet):
 class ToDoViewSet(ModelViewSet):
     serializer_class = serializers.ToDoBaseSerializer
     queryset = ToDo.objects.all()
-    pagination_class = ToDoPagePagination
     filterset_class = TodoFilter
 
     def destroy(self, request, *args, **kwargs):

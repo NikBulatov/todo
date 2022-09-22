@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from drf_writable_nested.serializers import WritableNestedModelSerializer
-from todoapp.models import CustomUserModel as User, Project, ToDo
+from todoapp.models import Project, ToDo, CustomUserModel as User
 
 
 class UserBaseSerializer(serializers.ModelSerializer):
@@ -12,8 +11,8 @@ class UserBaseSerializer(serializers.ModelSerializer):
 class UserSerializerVersion01(UserBaseSerializer):
     class Meta:
         model = User
-        fields = (
-            'first_name', 'last_name', 'email', 'is_superuser', 'is_staff')
+        fields = ('id', 'first_name', 'last_name', 'email', 'is_superuser',
+                  'is_staff')
 
 
 class ProjectBaseSerializer(serializers.ModelSerializer):
@@ -22,9 +21,7 @@ class ProjectBaseSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ToDoBaseSerializer(WritableNestedModelSerializer):
-    user = serializers.StringRelatedField()
-
+class ToDoBaseSerializer(serializers.ModelSerializer):
     class Meta:
         model = ToDo
         fields = '__all__'
