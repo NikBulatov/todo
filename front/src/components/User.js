@@ -6,6 +6,7 @@ const UserItem = ({user}) => {
     return (
         <tbody>
         <tr>
+            <td>{user.id}</td>
             <td>{user.firstName}</td>
             <td>{user.lastName}</td>
             <td>{user.email}</td>
@@ -21,6 +22,7 @@ const UserList = ({users}) => {
         <table className="table">
             <thead>
             <tr>
+                <th>ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
