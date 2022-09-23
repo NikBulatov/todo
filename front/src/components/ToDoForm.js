@@ -17,18 +17,13 @@ class ToDoForm extends React.Component {
     }
 
     handleChange(event) {
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
         this.setState({
-            [name]: value
+            [event.target.name]: event.target.value
         });
     }
 
     handleSelectChange(event) {
-        const target = event.target;
-        const name = target.name;
-        const options = target.options;
+        const options = event.target.options;
         const value = [];
         for (let i = 0; i < options.length; i++) {
             if (options[i].selected) {
@@ -36,14 +31,14 @@ class ToDoForm extends React.Component {
             }
         }
         this.setState({
-            [name]: value,
+            [event.target.name]: value,
         });
     }
 
 
     handleSubmit(event) {
         console.log(this.state.name);
-        this.props.createToDo(this.state.status, this.state.text, this.state.user, this.state.project)
+        this.props.createToDo(this.state.status, this.state.text, this.state.user, this.state.project);
         event.preventDefault()
     }
 
@@ -54,12 +49,12 @@ class ToDoForm extends React.Component {
             <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="text">Text</label>
-                    <input type="text" className="form-control" name="text" value={this.state.text}
-                           onChange={this.handleChange}/>
+                    <textarea name="text" className="form-control" onChange={this.handleChange}
+                              value={this.state.text}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="project">Project</label>
-                    <select name="project" onChange={this.handleChange}>
+                    <select name="project" value={this.state.project} onChange={this.handleChange}>
                         {this.props.getProjects().map(project =>
                             <option key={project.id} value={project.id}>
                                 {project.name}
@@ -69,7 +64,7 @@ class ToDoForm extends React.Component {
                 <div className="form-group">
                     <label htmlFor="user">User
                         <br/>
-                        <select name="user" onChange={this.handleSelectChange}>
+                        <select name="user" value={this.state.user} onChange={this.handleSelectChange}>
                             {this.props.getUsers().map(user =>
                                 <option key={user.id} value={user.id}>
                                     {user.firstName} {user.lastName}
