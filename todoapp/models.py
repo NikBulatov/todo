@@ -52,7 +52,8 @@ class ToDo(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(CustomUserModel, on_delete=models.CASCADE)
-    status = models.CharField(max_length=1, choices=StatusChoices.choices)
+    status = models.CharField(max_length=1, choices=StatusChoices.choices,
+                              default=StatusChoices.OPEN)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     def __str__(self):

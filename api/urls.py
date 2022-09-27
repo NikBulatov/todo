@@ -1,6 +1,5 @@
 from rest_framework.routers import DefaultRouter
 from .views import UserViewSet, ProjectViewSet, ToDoViewSet
-
 from django.urls import path, include, re_path
 
 app_name = 'api'
