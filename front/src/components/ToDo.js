@@ -1,14 +1,14 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
-const ToDoItem = ({todo, project, user, deleteToDo}) => {
+const ToDoItem = ({todo, project, deleteToDo}) => {
     let project_name = project !== undefined ? project.name : 'Unknown';
 
     return (
         <tbody>
         <tr>
             <td><Link to={`/${todo.project}`}>{project_name}</Link></td>
-            <td>{user.firstName} {user.lastName}</td>
+            <td>{todo.user.firstName} {todo.user.lastName}</td>
             <td>{todo.status}</td>
             <td>{todo.text}</td>
             <td>
@@ -19,7 +19,7 @@ const ToDoItem = ({todo, project, user, deleteToDo}) => {
     )
 };
 
-const ToDoList = ({todos, getProject, getUser, deleteToDo}) => {
+const ToDoList = ({todos, getProject, deleteToDo}) => {
     document.title = "ToDos";
 
     return (
@@ -33,7 +33,7 @@ const ToDoList = ({todos, getProject, getUser, deleteToDo}) => {
                     <th>Text</th>
                 </tr>
                 </thead>
-                {todos.map(todo => <ToDoItem user={(getUser(todo.user))}
+                {todos.map(todo => <ToDoItem user={todo.user}
                                              project={getProject(todo.project)}
                                              key={todo.id}
                                              todo={todo}

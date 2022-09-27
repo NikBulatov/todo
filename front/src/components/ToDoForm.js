@@ -49,8 +49,8 @@ class ToDoForm extends React.Component {
             <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="text">Text</label>
-                    <textarea name="text" className="form-control" onChange={this.handleChange}
-                              value={this.state.text}/>
+                    <input name="text" className="form-control" onChange={this.handleChange}
+                           value={this.state.text}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="project">Project</label>

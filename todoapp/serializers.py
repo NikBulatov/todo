@@ -56,7 +56,7 @@ class ProjectBaseSerializer(serializers.ModelSerializer):
 
 
 class ToDoBaseSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField()
+    id = serializers.IntegerField(required=False)
     user = UserBaseSerializer(read_only=True)
 
     class Meta:

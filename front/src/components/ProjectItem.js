@@ -2,9 +2,8 @@ import React from 'react';
 import {useParams} from 'react-router-dom';
 
 
-const ProjectItem = ({project, deleteProject, users}) => {
+const ProjectItem = ({project, deleteProject}) => {
     document.title = `Project ${project.name}`;
-    let users_names = users !== undefined ? users.map(user => ` | ${user.firstName} ${user.lastName}`) : 'Data was not uploaded'
 
     return (
         <tbody>
@@ -12,7 +11,7 @@ const ProjectItem = ({project, deleteProject, users}) => {
             <td>{project.id}</td>
             <td>{project.name}</td>
             <td>{project.url}</td>
-            <td>{users_names}</td>
+            <td>{project.users.map(user => ` | ${user.firstName} ${user.lastName}`)}</td>
             <td>
                 <button onClick={() => deleteProject(project.id)} type='button'>Delete</button>
             </td>
@@ -22,7 +21,7 @@ const ProjectItem = ({project, deleteProject, users}) => {
     )
 };
 
-const ProjectItems = ({items, deleteProject, getUsers}) => {
+const ProjectItems = ({items, deleteProject}) => {
     let {id} = useParams();
     let filtered_items = items.filter(item => item.id == id)
 
@@ -38,7 +37,7 @@ const ProjectItems = ({items, deleteProject, getUsers}) => {
                 </tr>
                 </thead>
                 {filtered_items.map(project => <ProjectItem
-                    users={getUsers().filter(user => user.id in project.users)} project={project} key={project.id}
+                    users={project.users} project={project} key={project.id}
                     deleteProject={deleteProject}/>)}
             </table>
         </div>
