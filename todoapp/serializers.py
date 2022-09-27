@@ -58,7 +58,6 @@ class ProjectBaseSerializer(serializers.ModelSerializer):
 class ToDoBaseSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()
     user = UserBaseSerializer(read_only=True)
-    project = ProjectBaseSerializer()
 
     class Meta:
         model = ToDo
@@ -69,14 +68,11 @@ class ToDoBaseSerializer(serializers.ModelSerializer):
             'user', None)
         user = User.objects.get(id=user_data.get('id'))
 
-        project_data = validated_data.pop('project', None)
-        project = Project.objects.get(id=project_data.get('id'))
-
-        if (user and project) and user in project.users.all():
-            todo = ToDo.objects.create(project=project, user=user,
-                                       project_id=project.id,
+        if user:
+            todo = ToDo.objects.create(user=user,
                                        user_id=user.id,
                                        **validated_data)
+
             todo.save()
             return todo
 
@@ -85,15 +81,10 @@ class ToDoBaseSerializer(serializers.ModelSerializer):
             'user', None)
         user = User.objects.get(id=user_data.get('id'))
 
-        project_data = validated_data.pop('project', None)
-        project = Project.objects.get(id=project_data.get('id'))
-
-        if (user and project) and user in project.users.all():
+        if user:
             instance.user = user
-            instance.project = project
-
             instance.user_id = user.id
-            instance.project_id = project.id
+        instance.project = validated_data.get('project', None)
 
         instance.text = validated_data.get('text', None)
         instance.status = validated_data.get('status', None)
