@@ -11,36 +11,27 @@ class ProjectForm extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleSelectChange = this.handleSelectChange.bind(this);
+        this.handleSelectUsersChange = this.handleSelectUsersChange.bind(this);
     }
 
     handleChange(event) {
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
         this.setState({
-            [name]: value
+            [event.target.name]: event.target.value
         });
     }
 
-    handleSelectChange(event) {
-        const target = event.target;
-        const name = target.name;
-        const options = target.options;
-        const value = [];
-        for (let i = 0; i < options.length; i++) {
-            if (options[i].selected) {
-                value.push(options[i].value);
-            }
-        }
+    handleSelectUsersChange(event) {
+        const options = [...event.target.getElementsByTagName('option')];
+        const filtered_options = options.filter(option => option.selected === true).map(option => +option.value);
+        const users = this.props.users.filter(user => filtered_options.includes(user.id));
         this.setState({
-            [name]: value,
+            users: users,
         });
     }
 
 
     handleSubmit(event) {
-        console.log(this.state.name);
+        console.log(this.state.users);
         this.props.createProject(this.state.name, this.state.url, this.state.users)
         event.preventDefault()
     }
@@ -63,8 +54,8 @@ class ProjectForm extends React.Component {
                 <div className="form-group">
                     <label htmlFor="users">Users
                         <br/>
-                        <select name="users" multiple={true} onChange={this.handleSelectChange}>
-                            {this.props.getUsers().map(user =>
+                        <select name="users" multiple={true} onChange={this.handleSelectUsersChange}>
+                            {this.props.users.map(user =>
                                 <option key={user.id} value={user.id}>
                                     {user.firstName} {user.lastName}
                                 </option>)}

@@ -51,6 +51,7 @@ class ProjectBaseSerializer(serializers.ModelSerializer):
 
         instance.name = validated_data.get("name", instance.name)
         instance.url = validated_data.get("url", instance.url)
+
         instance.save()
         return instance
 
@@ -84,9 +85,10 @@ class ToDoBaseSerializer(serializers.ModelSerializer):
         if user:
             instance.user = user
             instance.user_id = user.id
-        instance.project = validated_data.get('project', None)
 
+        instance.project = validated_data.get('project', None)
         instance.text = validated_data.get('text', None)
         instance.status = validated_data.get('status', None)
+
         instance.save()
         return instance

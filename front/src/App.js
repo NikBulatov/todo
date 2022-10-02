@@ -77,7 +77,7 @@ class App extends React.Component {
         axios.post(`${getUrl(this.state.menuItems[2].link)}/`, data, {headers})
             .then(response => {
                     let newToDo = response.data;
-                    newToDo.user = this.state.users.filter(user => user == user);
+                    newToDo.user = this.state.users.filter(user => user.id == user.id)[0];
                     this.setState({todos: [...this.state.todos, newToDo]})
                 }
             ).catch(error => console.log(error))
@@ -89,10 +89,6 @@ class App extends React.Component {
 
     getUser(id) {
         return this.state.users.filter(user => user.id == id)[0]
-    }
-
-    getProjects() {
-        return this.state.projects
     }
 
     getProject(id) {
@@ -186,7 +182,7 @@ class App extends React.Component {
                                                                       deleteProject={id => this.deleteProject(id)}
                                                                       getUsers={() => this.getUsers()}/>}/>
                             <Route exact path={`${this.state.menuItems[1].link}/create`}
-                                   element={<ProjectForm getUsers={() => this.getUsers()}
+                                   element={<ProjectForm users={this.state.users}
                                                          createProject={(name, url, users) =>
                                                              this.createProject(name, url, users)}/>}/>
 
@@ -196,8 +192,8 @@ class App extends React.Component {
                                                       todos={this.state.todos}
                                                       deleteToDo={id => this.deleteToDo(id)}/>}/>
                             <Route exact path={`${this.state.menuItems[2].link}/create`}
-                                   element={<ToDoForm getUsers={() => this.getUsers()}
-                                                      getProjects={() => this.getProjects()}
+                                   element={<ToDoForm users={this.state.users}
+                                                      projects={this.state.projects}
                                                       createToDo={(status, user, text, project) =>
                                                           this.createToDo(status, user, text, project)}/>}/>
 
