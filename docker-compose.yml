@@ -1,0 +1,19 @@
+version: "4.12"
+
+services:
+  db:
+    image: postgres:14.5
+    privileged: true
+    ports:
+      - "5432:5432"  # проброс портов с внешнего окружения на контейнер
+    environment:
+      POSTGRES_USER: django
+      POSTGRES_PASSWORD: DjangoToDo
+      POSTGRES_DB: todo
+  adminer:
+    image: adminer:4.8.1-standalone
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
