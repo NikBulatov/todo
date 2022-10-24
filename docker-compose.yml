@@ -3,7 +3,7 @@ version: "4.12"
 services:
   db:
     env_file:
-      -
+      - .env
     image: postgres:14.5
     privileged: true
     restart: always
