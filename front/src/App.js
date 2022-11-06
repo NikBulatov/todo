@@ -40,7 +40,7 @@ class App extends React.Component {
 
     deleteProject(id) {
         const headers = this.getHeaders();
-        axios.delete(`${getUrl(this.state.menuItems[1].link)}/${id}`, {headers})
+        axios.delete(`${getUrl('/projects')}/${id}`, {headers})
             .then(response => {
                 this.setState({projects: this.state.projects.filter(item => item.id !== id)})
             }).catch(error => console.log(error))
@@ -49,7 +49,7 @@ class App extends React.Component {
     createProject(name, url, users) {
         const headers = this.getHeaders();
         let data = {name: name, url: url, users: users};
-        axios.post(`${getUrl(this.state.menuItems[1].link)}/`, data, {headers})
+        axios.post(`${getUrl('/projects')}/`, data, {headers})
             .then(response => {
                     let newProject = response.data;
                     newProject.users = this.state.users.filter(user => user.id in users);
@@ -60,7 +60,7 @@ class App extends React.Component {
 
     deleteToDo(id) {
         const headers = this.getHeaders();
-        axios.delete(`${getUrl(this.state.menuItems[2].link)}/${id}`, {headers})
+        axios.delete(`${getUrl('/todos')}/${id}`, {headers})
             .then(response => {
                 this.setState({todos: this.state.todos.filter(item => item.id !== id)})
             }).catch(error => console.log(error))
@@ -74,7 +74,7 @@ class App extends React.Component {
             text: text,
             project: project
         };
-        axios.post(`${getUrl(this.state.menuItems[2].link)}/`, data, {headers})
+        axios.post(`${getUrl('/todos')}/`, data, {headers})
             .then(response => {
                     let newToDo = response.data;
                     newToDo.user = this.state.users.filter(user => user.id == user.id)[0];
@@ -141,17 +141,17 @@ class App extends React.Component {
     loadData() {
         const headers = this.getHeaders();
 
-        axios.get(getUrl(this.state.menuItems[0].link), {headers})
+        axios.get(getUrl('/users'), {headers})
             .then(response => {
                 this.setState({users: response.data})
             }).catch(error => console.log(error));
 
-        axios.get(getUrl(this.state.menuItems[1].link), {headers})
+        axios.get(getUrl('/projects'), {headers})
             .then(response => {
                 this.setState({projects: response.data})
             }).catch(error => console.log(error));
 
-        axios.get(getUrl(this.state.menuItems[2].link), {headers})
+        axios.get(getUrl('/todos'), {headers})
             .then(response => {
                 this.setState({todos: response.data})
             }).catch(error => console.log(error));
@@ -171,27 +171,27 @@ class App extends React.Component {
                     </header>
                     <div className="container">
                         <Routes>
-                            <Route exact path="/" element={<Navigate replace to={this.state.menuItems[0].link}/>}/>
+                            <Route exact path="/" element={<Navigate replace to='/users'/>}/>
 
-                            <Route exact path={this.state.menuItems[0].link}
+                            <Route exact path='/users'
                                    element={<UserList users={this.state.users}/>}/>
 
-                            <Route exact path={this.state.menuItems[1].link}
+                            <Route exact path='/projects'
                                    element={<ProjectList projects={this.state.projects}/>}/>
                             <Route path="/:id" element={<ProjectItems items={this.state.projects}
                                                                       deleteProject={id => this.deleteProject(id)}
                                                                       getUsers={() => this.getUsers()}/>}/>
-                            <Route exact path={`${this.state.menuItems[1].link}/create`}
+                            <Route exact path='/projects/create'
                                    element={<ProjectForm users={this.state.users}
                                                          createProject={(name, url, users) =>
                                                              this.createProject(name, url, users)}/>}/>
 
-                            <Route exact path={this.state.menuItems[2].link}
+                            <Route exact path='/todos'
                                    element={<ToDoList getUser={id => this.getUser(id)}
                                                       getProject={id => this.getProject(id)}
                                                       todos={this.state.todos}
                                                       deleteToDo={id => this.deleteToDo(id)}/>}/>
-                            <Route exact path={`${this.state.menuItems[2].link}/create`}
+                            <Route exact path={'/todos/create'}
                                    element={<ToDoForm users={this.state.users}
                                                       projects={this.state.projects}
                                                       createToDo={(status, user, text, project) =>
