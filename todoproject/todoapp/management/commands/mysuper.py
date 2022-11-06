@@ -11,4 +11,4 @@ class Command(BaseCommand):
             password="admin",
         )
 
-        print(f"SuperUser was created")
+        print(f"Superuser was created")

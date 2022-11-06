@@ -1,0 +1,42 @@
+version: "4.12"
+
+services:
+  db:
+    env_file:
+      - .env
+    image: postgres:14.5
+    privileged: true
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+  backend:
+    build:
+      context: ./todoproject/
+    ports:
+      - "8080:8080"
+#    expose:
+#      - 8080
+    command: bash -c "
+      ./wait-for-postgres.sh db
+      && python manage.py migrate
+      && gunicorn config.wsgi -b 0.0.0.0:8080
+      "
+    depends_on:
+      - db
+  nginx:
+    build: ./nginx
+    ports:
+      - "8000:80"
+    depends_on:
+      - backend
+  frontend:
+    build: ./front
+    ports:
+      - "80:80"
+    depends_on:
+      - nginx
+
